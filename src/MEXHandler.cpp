@@ -7,6 +7,8 @@ using namespace std;
 bool advancedmxIsEmpty(const mxArray *mxa) {
 	return (mxa == NULL || mxIsEmpty(mxa));
 }
+// #define DBG(...) do { mexPrintf(__VA_ARGS__); mexEvalString("drawnow;"); } while(0)
+
 /**
 mxArray *mxHandler::generateStruct(const size_t& M, const size_t& N,const std::vector<std::string>& fieldNames) {
 	std::vector<std::string> minor_outputs2 = std::vector<std::string>();
@@ -72,6 +74,12 @@ void MEXHandler::loadStruct() {
 void MEXHandler::processData() {
 	loadStruct(_file_name);
 }
+mxArray* MEXHandler::getDataCopy() const {
+    if (!_data || !_data.isStruct()) {
+        return mxCreateStructMatrix(1, 1, 0, nullptr);
+    }
+    return mxDuplicateArray(_data.get());
+}
 void MEXHandler::loadStruct(const std::string& file_name) {
 	setDataStat(4);
 	//std::cout << "loadStruct, file opens... " << file_name<<std::endl;
@@ -86,6 +94,10 @@ void MEXHandler::loadStruct(const std::string& file_name) {
 	//std::cout << "loadStruct, file opened successfully..., loading variable " << file_name << std::endl;
 	_data = mexplus::MxArray(matGetNextVariable(mtf, &fname));
 	matClose(mtf);
+	// mexPrintf("DEBUG loadStruct: loaded var name=%s\n", fname ? fname : "(null)");
+	// mexPrintf("DEBUG loadStruct: isOwner=%d isStruct=%d\n", (int)_data.isOwner(), (int)_data.isStruct());
+	// mexEvalString("drawnow;");
+
 	//std::cout << "loadStruct, variable loaded... "<< std::endl;
 	if ( !_data) {
 		setDataStat(2);
@@ -129,6 +141,9 @@ void MEXHandler::setTargetForWrite(const std::string& write_target, void *target
 	//mxArray *mxa = (mxArray *)target_object;
 	mxArray *mxa = (mxArray *)target_object;
 	_output_buffers[write_target] = mxa; //std::shared_ptr<mxArray>(mxa);
+	// DBG("DBG setTargetForWrite: major='%s' target_ptr=%p\n",
+    // write_target.c_str(), target_object);
+
 }
 void MEXHandler::clearMajorBasic(const std::string& major, const int& terminate_data_object) {
 	auto it = _output_buffers.find(major);
@@ -148,12 +163,21 @@ void MEXHandler::updateMajor(std::string majorName, mxArray *mxa) {
 }
 void MEXHandler::write_vector(const std::string& minor, const std::string& major, const std::vector<float>& v, const size_t& length, const size_t& offset, const size_t& M) {
 	float *fdata = (float *)v.data();
+// DBG("DBG write*: major='%s' minor='%s'\n", major.c_str(), minor.c_str());
+
 	write_vector(minor, major, fdata, length, offset, M);
 }
 void MEXHandler::write_vector(const std::string& minor, const std::string& major, float *v, const size_t& length, const size_t& offset,const size_t& M) {
 	//std::cout << __FILE__ << ": (minor=" << minor << ",major=" << major << ",length= " << length << ",offset= "<<offset<<",M="<<M<<")" << std::endl;
+	// DBG("DBG write*: major='%s' minor='%s'\n", major.c_str(), minor.c_str());
+
 	auto mxa = claimFieldHandler(minor, major);
+
 	/**
+
+
+mexEvalString("drawnow;");
+
 	mxArray *mxm = mxGetField(mxa, 0, minor.c_str());
 	size_t N = static_cast<size_t>(length) / M;
 	if (advancedmxIsEmpty(mxm)) {
@@ -184,6 +208,23 @@ void MEXHandler::write_vector(const std::string& minor, const std::string& major
 	size_t Mm1 = M;
 	if (Mm1 == 0) Mm1 = 1;
 	//PrintFormat("outputs: %s length %d,offset:%d,Mm1=%d\n", minor.c_str(), length, offset, Mm1);
+	// DBG("DBG write_vector ENTER: major='%s' minor='%s' length=%zu offset=%zu M=%zu\n",
+    // major.c_str(), minor.c_str(), length, offset, M);
+
+// if (v && length > 0) {
+//     size_t i0 = (offset < length ? offset : 0);
+//     size_t i1 = (i0 + 1 < length ? i0 + 1 : i0);
+//     size_t i2 = (i0 + 2 < length ? i0 + 2 : i0);
+
+//     DBG("DBG write_vector INPUT sample: v[%zu]=%.9g v[%zu]=%.9g v[%zu]=%.9g  (vptr=%p)\n",
+//         i0, (double)v[i0], i1, (double)v[i1], i2, (double)v[i2], (void*)v);
+// } else if (!v) {
+//     DBG("DBG write_vector INPUT: v is NULL!\n");
+// } else {
+//     DBG("DBG write_vector INPUT: length=0 (nothing to sample)\n");
+// }
+
+
 	mxa.append<float>(minor, v, length, offset, 0, Mm1);
 	updateMajor(major, mxa.release());
 	/**
@@ -308,18 +349,39 @@ void MEXHandler::writeVectorString(const std::string& minor, const std::string& 
 	}
 	*/
 }
-mexplus::MxArray MEXHandler::claimFieldHandler(const std::string& minor, const std::string& major) {
-	if (!isDefined(minor, major)) {
-		// minor,major combination is missing, lets add it
-		addMinorToMajor(minor, major);
-	}
-	auto it = _output_buffers.find(major);
-	if (it != _output_buffers.end()) {
-		//mexplus::MxArray mxa = it->second;
-		
-		return mexplus::MxArray(_output_buffers[major]);
-	}
-	return mexplus::MxArray();
+mexplus::MxArray MEXHandler::claimFieldHandler(const std::string& minor,
+                                              const std::string& major)
+{
+    // אם הצמד minor/major לא מוגדר – ננסה להוסיף שדה
+    if (!isDefined(minor, major)) {
+        addMinorToMajor(minor, major);
+    }
+
+    // למצוא את ה-major במוצאים
+    auto it = _output_buffers.find(major);
+    if (it == _output_buffers.end()) {
+        mexPrintf("DBG claimFieldHandler: major NOT FOUND: '%s' (minor='%s')\n",
+                  major.c_str(), minor.c_str());
+        mexEvalString("drawnow;");
+        return mexplus::MxArray();
+    }
+
+    // ===== DEBUG לפני return (חובה שיהיה כאן) =====
+    // mxArray* maj = it->second;
+
+    
+
+    // mexPrintf("DBG claimFieldHandler: major='%s' minor='%s' majPtr=%p isStruct=%d numFields=%d fieldNumber=%d\n",
+    //           major.c_str(), minor.c_str(),
+    //           (void*)maj,
+    //           (int)mxIsStruct(maj),
+    //           (int)mxGetNumberOfFields(maj),
+    //           (int)mxGetFieldNumber(maj, minor.c_str()));
+    // mexEvalString("drawnow;");
+    // =============================================
+
+    // להחזיר את ה-struct של ה-major (אותו מxa שמשמש ל-mxa.set(minor,...))
+    return mexplus::MxArray(it->second); // עדיף it->second ולא _output_buffers[major]
 }
 
 
@@ -356,6 +418,8 @@ void MEXHandler::write_map(const std::string& minor, const std::string& major,co
 	//mxSetField(mxa, 0, minor.c_str(), structedMap);
 }
 void MEXHandler::writeString(const std::string& minor, const std::string& major, const std::string& s) {
+	// DBG("DBG writeString: major='%s' minor='%s'\n", major.c_str(), minor.c_str());
+
 	auto mxa = mexplus::MxArray(claimFieldHandler(minor, major));
 	mxa.set(minor, s);
 	updateMajor(major, mxa.release());

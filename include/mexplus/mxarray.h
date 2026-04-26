@@ -51,13 +51,17 @@
 #define INCLUDE_MEXPLUS_MXARRAY_H_
 
 #include <mex.h>
-#include "matrix.h"
+#include <matrix.h>
 
-// ---- MATLAB compatibility shim ----
 #ifndef mxGetPiIsDeprecated
-  #define mxGetPiIsDeprecated mxGetPi
+#define mxGetPiIsDeprecated() 0
 #endif
-// -----------------------------------
+
+// // ---- MATLAB compatibility shim ----
+// #ifndef mxGetPiIsDeprecated
+//   #define mxGetPiIsDeprecated mxGetPi
+// #endif
+// // -----------------------------------
 
 
 #include <algorithm>

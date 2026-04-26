@@ -4,7 +4,7 @@
 #include <mexplus/mexplus.h>
 #include <type_traits>
 #include "VirtualHandler.h"
-#include "matrix.h"
+#include <matrix.h>
 #include "cvector.h"
 #include "cochlea_utils.h"
 bool advancedmxIsEmpty(const mxArray *mxa);
@@ -130,6 +130,7 @@ public:
 	void loadStruct(const std::string& file_name);
 	void loadStruct();
 	void processData();
+	mxArray* getDataCopy() const;
 	int hasVariable(const std::string& variable_name);
 	inline const mxArray *getVariable(const std::string& variable_name) const { return _data.at(variable_name); }
 	

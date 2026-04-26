@@ -360,7 +360,7 @@ void Operation_##name::operator()
 /** Insert a function dispatching code. Use once per MEX binary.
  */
 #define MEX_DISPATCH \
-void mexFunction(int nlhs, mxArray *plhs[], \
+extern "C" void mexFunction(int nlhs, mxArray *plhs[], \
                  int nrhs, const mxArray *prhs[]) { \
   MEXPLUS_AT_INIT;\
   if (nrhs < 1 || !mxIsChar(prhs[0])) \

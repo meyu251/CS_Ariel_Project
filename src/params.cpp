@@ -518,8 +518,27 @@ int CParams::calcLastSavedTimeBlock() {
 #ifdef CUDA_MEX_PROJECT
 void CParams::parseMexFile(const mxArray *input_arrays[], mxArray *output_arrays[]) {
 	const mxArray *input_struct = input_arrays[0];
+	// mexPrintf("DEBUG parseMexFile: input_struct isStruct=%d numFields=%d\n",
+    //       (int)mxIsStruct(input_struct),
+    //       mxGetNumberOfFields(input_struct));
+
+// for (int i = 0; i < mxGetNumberOfFields(input_struct) && i < 30; ++i) {
+//     mexPrintf("  field[%d]=%s\n", i, mxGetFieldNameByNumber(input_struct, i));
+// }
+const mxArray* fsArr = mxGetField(input_struct, 0, "Fs");
+if (!fsArr) {
+    mexPrintf("DEBUG Fs: field NOT FOUND\n");
+} else if (mxGetNumberOfElements(fsArr) != 1) {
+    mexPrintf("DEBUG Fs: NOT scalar (numel=%llu)\n",
+              (unsigned long long)mxGetNumberOfElements(fsArr));
+} else {
+    mexPrintf("DEBUG Fs VALUE = %.15g\n", mxGetScalar(fsArr));
+}
+mexEvalString("drawnow;");
+
 	mxArray *output_struct;
-	std::cout << "processing mex strcuture " << std::endl;
+
+	// std::cout << "processing mex strcuture " << std::endl;
 	if (vh != NULL) {
 		delete vh;
 		vh = NULL;
@@ -543,6 +562,20 @@ void CParams::parseMexFile(const mxArray *input_arrays[], mxArray *output_arrays
 	vhout->setTargetsForWrite(output_name, minor_outputs2, output_struct);
 	vhout->writeString("output_struct", "anchor loaded on mex run");
 	parse_params_map(false);
+	mxArray* out = output_arrays[0];
+mexPrintf("DEBUG OUT FINAL: isStruct=%d numFields=%d\n",
+          (int)mxIsStruct(out),
+          mxIsStruct(out) ? mxGetNumberOfFields(out) : 0);
+
+if (mxIsStruct(out)) {
+    int nf = mxGetNumberOfFields(out);
+    for (int i = 0; i < nf; ++i) {
+        mexPrintf("  OUT field[%d]=%s\n",
+                  i, mxGetFieldNameByNumber(out, i));
+    }
+}
+mexEvalString("drawnow;");
+
 }
 #endif
 
@@ -1378,7 +1411,7 @@ void CParams::parse_params_map(bool Review_Parse) {
 			Aihc.resize(aihc_vs.size());
 			//Aihc = std::vector<float>(aihc_vs);
 			std::copy(aihc_vs.begin(), aihc_vs.end(), Aihc.begin());
-			printf("Aihc[0]=%.2f\n", Aihc[0]);
+			// printf("Aihc[0]=%.2f\n", Aihc[0]);
 		}
 	}
 	if (Aihc.size() < SECTIONS*LAMBDA_COUNT) {

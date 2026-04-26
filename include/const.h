@@ -222,18 +222,19 @@
 #define LIQUID_RHO			(1.0f)			// [gr/cm^3] liquid density (Density of perilymph)
 #define BM_WIDTH			(0.003f)		// [cm] BM width
 
-#define M0					(1.286e-6f)	// [g/cm^2] Const factor of the Basilar Membrane mass density per unit area
+#define M0					(1.0023e-6)	//(1.268e-6)	// [g/cm^2] Const factor of the Basilar Membrane mass density per unit area
 #define M1					(1.5f)			// [g/cm^2] Exponent factor of the Basilar Membrane mass density per unit area
 #define R0					(0.25f)		// [g/(cm^2*sec)] Const factor of the Basilar Membrane mass resistance per unit area
 #define R1					(-0.06f)		// [g/(cm^2*sec)] Exponent factor of the Basilar Membrane mass resistance per unit area
-#define S0					(1.282e4f)		// [g/(cm^2*sec^2)] (elasticity) ExpConstonent factor of the Basilar Membrane mass stiffness per unit area
-#define S1Cochlear					(-1.5f)		// [g/(cm^2*sec^2)] (elasticity) Exponent factor of the Basilar Membrane mass stiffness per unit area
+#define S0				  	(1.282e4)		// [g/(cm^2*sec^2)] (elasticity) ExpConstonent factor of the Basilar Membrane mass stiffness per unit area
+#define S1Cochlear			(-1.5f)		// [g/(cm^2*sec^2)] (elasticity) Exponent factor of the Basilar Membrane mass stiffness per unit area
 
 // OW (oval window <-> middle ear):
-#define W_OW				2*PI*1500		// [rad] Middle ear angular frequency
+#define W_OW				2*PI*1000 //2*PI*1500		// [rad] Middle ear angular frequency
 #define SIGMA_OW			(0.5f)				//ME1: 0.35	 //ME2: 0.35	//ME0: 1.85		// [gr/cm^2] Oval window aerial density	
 #define GAMMA_OW			(20e3f)			//ME1: 50e3	 //ME2: 500.0	//ME0: 500		// [1/sec] Middle ear damping constant
-#define C_ME				(2*PI*1340)*(2*PI*1340)*0.059f/(0.49f*1.4f)	// (~6e6) Mechanical gain of the ossicles
+// #define C_ME				(2*PI*1340)*(2*PI*1340)*0.059f/(0.49f*1.4f)	// (~6e6) Mechanical gain of the ossicles
+#define C_ME				(2*PI*1000)*(2*PI*1000)*0.059f/(0.49f*1.4f)	// (~6e6) Mechanical gain of the ossicles
 #define G_ME				(21.4f)			// Coupling of oval window displacement to ear canal pressure
 #define C_OW				(6e-3f)			//0.032/0.011			// (~2.9091) Coupling of oval window to basilar membrane
 

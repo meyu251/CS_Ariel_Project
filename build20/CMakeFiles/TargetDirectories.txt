@@ -1,0 +1,4 @@
+D:/CS_Ariel_Project/build20/CMakeFiles/AudioLabCM.dir
+D:/CS_Ariel_Project/build20/CMakeFiles/INSTALL.dir
+D:/CS_Ariel_Project/build20/CMakeFiles/ALL_BUILD.dir
+D:/CS_Ariel_Project/build20/CMakeFiles/ZERO_CHECK.dir

@@ -1,0 +1,10 @@
+^D:\CS_ARIEL_PROJECT\BUILD20\CMAKEFILES\6FF97AAF65AE7B236FABC547E9C0CD62\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/CS_Ariel_Project -BD:/CS_Ariel_Project/build20 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/CS_Ariel_Project/build20/AudioLabCM.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

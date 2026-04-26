@@ -87,6 +87,7 @@ BOOL CAudioLabCMApp::InitInstance()
 * procedure parse inputs with MEXHandler and executes the solver while logging run times
 * if runs first time creates the resource handler and creates handler to release program memory
 */
+
 void mexFunction(int nlhs, mxArray *plhs[],
 	int nrhs, const mxArray *prhs[]) {
 	mxstreambuf mout;
@@ -103,7 +104,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
 	mexLock();
 	try {
 		mex_handler->updateRunTimes();
-		PrintFormat("running Audiolab emulation update run times\n");
+		// PrintFormat("running Audiolab emulation update run times\n");
 		mex_handler->mainlog.markTime(0);
 
 
@@ -128,8 +129,21 @@ void mexFunction(int nlhs, mxArray *plhs[],
 		mex_handler->mainlog.markTime(5);
 		// solving cochlear equation + an response + JND (if needed)
 		mex_handler->GSolver->Run(0.0);
-		
-		mex_handler->mainlog.markTime(6);
+
+auto* vh = mex_handler->params ? mex_handler->params->vhout : nullptr;
+
+// if (!vh) {
+//     mexPrintf("DEBUG: vhout is NULL\n");
+//     mexEvalString("drawnow;");
+//     return;
+// }
+
+// mexPrintf("DEBUG: vhout exists at %p\n", vh);
+// mexEvalString("drawnow;");
+
+
+mex_handler->mainlog.markTime(6);
+
 		// assert device synchronized
 		gpuAssert(cudaThreadSynchronize());
 		mex_handler->mainlog.markTime(7);

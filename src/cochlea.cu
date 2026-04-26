@@ -2118,6 +2118,8 @@ Log &outer_log
 			printf("BMOHC_FAST_kernel << <%s,%s>>>(...);\n", showDIM3(grid).c_str(), showDIM3(threads).c_str());
 		}
 		BMOHC_FAST_kernel KERNEL_ARGS2(grid, threads)(
+			
+
 			cudaHolderData.cuda_input_samples,
 			cudaHolderData.cuda_saved_speeds,
 			cudaHolderData.cuda_Failed_Converged_Time_Node,
@@ -2146,12 +2148,22 @@ Log &outer_log
 			cudaHolderData.cuda_convergence_jacoby_loops_per_iteration,
 			cudaHolderData.cuda_convergence_jacoby_loops_per_iteration_blocks
 			);
+			cudaError_t e1 = cudaPeekAtLastError();
+fprintf(stderr, "[GPU] after launch FAST: %s\n", cudaGetErrorString(e1));
+
+cudaError_t e2 = cudaDeviceSynchronize();
+fprintf(stderr, "[GPU] after sync: %s\n", cudaGetErrorString(e2));
+
+cudaError_t e3 = cudaGetLastError();
+fprintf(stderr, "[GPU] getLastError: %s\n", cudaGetErrorString(e3));
 		if (Show_Device_Data & 32) cudaOccupancyIndicator(threads.x, BMOHC_FAST_kernel, deviceProp);
 	} else {
 		if (Show_Calculated_Power & 16) {
 			printf("BMOHC_NEW_kernel << <%s,%s>>>(...);\n", showDIM3(grid).c_str(), showDIM3(threads).c_str());
 		}
 		BMOHC_NEW_kernel KERNEL_ARGS2(grid, threads)(
+			
+
 			cudaHolderData.cuda_input_samples,
 			cudaHolderData.cuda_saved_speeds,
 			cudaHolderData.cuda_Failed_Converged_Time_Node,
@@ -2179,6 +2191,12 @@ Log &outer_log
 			cudaHolderData.cuda_convergence_jacoby_loops_per_iteration,
 			cudaHolderData.cuda_convergence_jacoby_loops_per_iteration_blocks
 		);
+	cudaError_t e1 = cudaPeekAtLastError();
+fprintf(stderr, "[GPU] after launch: %s\n", cudaGetErrorString(e1));
+cudaError_t e2 = cudaDeviceSynchronize();
+fprintf(stderr, "[GPU] after sync: %s\n", cudaGetErrorString(e2));
+cudaError_t e3 = cudaGetLastError();
+fprintf(stderr, "[GPU] getLastError: %s\n", cudaGetErrorString(e3));	
 		if (Show_Device_Data & 32) cudaOccupancyIndicator(threads.x, BMOHC_NEW_kernel, deviceProp);
 	}
     

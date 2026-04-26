@@ -786,6 +786,8 @@ void CSolver::Run_Cuda(double start_time)
 				 if (input_params[params_set_counter].JND_Calculate_RMS() ) {
 					 vector<float> jndBuffer = castVector<double, float>(creator->RateJNDall);
 					 jndBuffer.resize(num_of_calculated);
+
+					 
 					 if (input_params[params_set_counter].JND_Signal_Source == 0) {
 						// PrintFormat("Record %lu RMS power\n", jndBuffer.size());
 						 input_params[params_set_counter].vhout->write_vector("jnd_rms_power", jndBuffer, num_of_calculated, 0, num_of_calculated / input_params[params_set_counter].JND_Column_Size());
@@ -795,6 +797,8 @@ void CSolver::Run_Cuda(double start_time)
 					 //jnd_file.append_buffer(jndBuffer, num_of_calculated, 0);
 					 //PrintFormat("Record %lu RMS buffer\n", jndBuffer.size());
 					 input_params[params_set_counter].vhout->write_vector("jnd_rms", jndBuffer, num_of_calculated, 0, Mcolumns_size);
+
+
 					 if ((input_params[params_set_counter].JND_Include_Legend & 2) != 0) {
 						// PrintFormat("Record RMS legend\n");
 						 input_params[params_set_counter].vhout->writeVectorString("jnd_rms_legend", transposeVector(creator->getSimpleLegends(1, input_params[params_set_counter].JND_Calculated_Intervals_Positions), rmsMsize), rmsMsize);
