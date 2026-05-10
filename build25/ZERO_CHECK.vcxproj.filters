@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\CS_Ariel_Project\build25\CMakeFiles\a986516fe5820f379288abddbb9914e0\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{83F6DF24-13BF-3A4F-8B4C-218A215C622C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

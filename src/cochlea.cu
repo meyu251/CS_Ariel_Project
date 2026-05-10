@@ -23,9 +23,9 @@
 //#include <cuda_runtime.h>
 //#include <device_launch_parameters.h> 
 #include <device_functions.h> 
-#include <helper_functions.h>
+//#include <helper_functions.h>
 #include <device_double_functions.h>
-#include <helper_cuda.h>
+//#include <helper_cuda.h>
 #include <cuda.h>
 
 typedef float2 Complex;

@@ -23,8 +23,8 @@
 #include "device_launch_parameters.h"
 #include "device_functions.h"
 #include <cufft.h>
-#include "helper_functions.h"
-#include "helper_cuda.h"
+//#include "helper_functions.h"
+//#include "helper_cuda.h"
 #include "intellisense.h"
 #define FULL_MASK 0xffffffff
 #define DEBUG_CUDA_BLOCKS  0
@@ -66,7 +66,7 @@ __constant__ long model_constants_longs[MODEL_LONGS_CONSTANTS_SIZE];
 #endif
 
 #ifdef __CUDA_ARCH__
-#pragma message( "Last modified on " __TIMESTAMP__ " ,Cuda arch found " __CUDA_ARCH__) 
+//#pragma message( "Last modified on " __TIMESTAMP__ " ,Cuda arch found " __CUDA_ARCH__)
 #if (__CUDA_ARCH__ >= 500)
 #define KERNEL_BLOCKS 5
 #elif (__CUDA_ARCH__ < 500)

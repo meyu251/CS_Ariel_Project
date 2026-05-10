@@ -11,5 +11,5 @@ for sub=1:Nsub
     [OHC0(sub) VecIHC(sub,:) cTs(sub,:) Gain(sub,:) OHCloss(sub,:)]= FindHCfromAudio(Audio(sub,:)',Nf);
     OHC0
 end
-save HairCellEstimationTuned VecIHC OHC0 cTs  Gain OHCloss Audio 
+%save HairCellEstimationTuned VecIHC OHC0 cTs  Gain OHCloss Audio 
 PlotTunedResults

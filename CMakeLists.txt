@@ -15,7 +15,7 @@ project(${LIB_NAME} LANGUAGES CUDA CXX C)
 #set(TARGET_COMPUTE "61")
 #set( CMAKE_CUDA_FLAGS "--ptxas-options=-v;-rdc=true;--keep;-gencode arch=compute_${TARGET_COMPUTE},code=sm_${TARGET_ARCHITECTURE}" CACHE STRING "" )
 cmake_policy(SET CMP0104 NEW)
-set(CMAKE_CUDA_ARCHITECTURES 61)
+set(CMAKE_CUDA_ARCHITECTURES 120)
 
 
 OPTION(DYNAMIC_LINKING "Set to ON to build the module for dynamic linking.  Use OFF for static." ON)

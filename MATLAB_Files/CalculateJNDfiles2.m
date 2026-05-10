@@ -25,6 +25,9 @@ function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En,
     if ( ~exist('IHC_Vector','var') )
         IHC_Vector = 8;
     end
+
+    parallel.gpu.enableCUDAForwardCompatibility(true)
+
     g = gpuDevice();
     maxSeconds = g.TotalMemory/(120*1024*1024);
     if ( ~exist('run_time','var') )
