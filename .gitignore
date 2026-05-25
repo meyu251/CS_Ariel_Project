@@ -1,0 +1,30 @@
+# Build artifacts
+build*/
+*.exp
+*.lib
+*.pdb
+*.ilk
+
+# Compiled MEX binaries (keep root-level mexw64 for MATLAB)
+build*/*.mexw64
+build*/bin/
+
+# CMake generated
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+*.vcxproj
+*.vcxproj.filters
+*.sln
+
+# Misc output files
+depth*.txt
+
+# CUDA
+*.ptx
+*.cubin
+
+# VS
+.vs/
+*.suo
+*.user
