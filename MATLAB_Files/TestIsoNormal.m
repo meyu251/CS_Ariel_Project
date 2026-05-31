@@ -20,12 +20,17 @@ testedPowerLevels = -10:5:120;
 %f=[100, 250,500,1000,2000,3000,3500,4000,8000];
 f=Freq(1:20);
 OHC_Vector=0.5; IHC_Vector=8;
-delete('AudioLabCM.mexw64')
 
+t = 0:1/Fs:run_time-1/Fs;
+s = sin(2*pi*1000*t);
+
+audiowrite('TestFreq.wav',s,Fs);
+
+delete('AudioLabCM.mexw64')
 copyfile('OldAudioLabCM.mexw64', 'AudioLabCM.mexw64')
 SetCochlearParametersOld
-[JNDrefOld ]= CalculateJNDfiles2(f,noise,run_time,En,testedPowerLevels,OHC_Vector, IHC_Vector);
-
+[JNDrefOld]= CalculateJNDfiles2(1000,noise,run_time,En,testedPowerLevels,OHC_Vector, IHC_Vector);
+[JNDrefOld2] = CalculateJNDfiles(TestFreq.wav, )
 delete('AudioLabCM.mexw64')
 
 copyfile('NewAudioLabCM.mexw64', 'AudioLabCM.mexw64')
