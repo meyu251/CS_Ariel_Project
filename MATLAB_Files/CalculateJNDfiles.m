@@ -1,4 +1,4 @@
-function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En, testedPowerLevels, OHC_Vector, IHC_Vector, PrescriptionName )
+function [jnd_final, jnd_rms] = calculateJNDfiles( signal,noise,run_time,En, testedPowerLevels, OHC_Vector, IHC_Vector, PrescriptionName )
 %CALCULATEGENERALJND calculates JND for any signal and noise
 %   signal should be wav file name (relative path to current folder
 %   suffice)
@@ -31,14 +31,10 @@ function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En,
         run_time = 0.2;
     end
     
-    load Final_Parameters
-  
-    Fs=20000;
-    
     min_intervals = 8;
     max_intervals = 25;
     Allowed_Outputs = 0;   %Generate Outputs
-    
+    load Final_Parameters.mat;
     Hearing_Aid_Prescription = 1;
 %     if ( ~isCochleaHealthy( OHC_Vector, IHC_Vector ) && ~strcmp(PrescriptionName,'') )
 %         % if coclea not healthy, calculate prescription first
@@ -46,15 +42,15 @@ function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En,
 %             getPrescription( OHC_Vector, IHC_Vector, PrescriptionName );
 %     end
     
-%     [ SignalObject ] = getFileSample( Fs,signal,run_time,0,100,0 );
-%     run_time = SignalObject.length_cut;
+    [ SignalObject ] = getFileSample( Fs,signal,run_time,0,100,0 );
+    run_time = SignalObject.length_cut;
      testedNoises = [En];
     JND_Noise_Source = 1;
     %testedPowerLevels = 20:10:100;% linspace(10,100,max(min_intervals,min(max_intervals,floor(10/SignalObject.length_cut))));
     
     NoiseObject = struct();
     if ( (ischar(noise) && ~strcmp(noise,'')) || (~ischar(noise) && mean(noise.*noise) ~= 0) )
-        NoiseObject = getFileSample( Fs,noise,run_time,0,100,0 );
+        NoiseObject = getFileSample( Fs,noise,SignalObject.length_cut,0,100,0 );
         JND_Noise_Source = 1;
         % fix SPLref to match oded
         %fix_factor = sqrt(SPLref/2e-5);
@@ -72,21 +68,21 @@ function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En,
     end
     AC_Filter_Vector = getTimeSynapsesIIR( 20000,300,1800,3,30);
 
-    jnd_rms = zeros(length(testedNoises)*length(AudioFreq),powerLevelsNumber);
+    jnd_rms = zeros(length(testedNoises),powerLevelsNumber);
     current_index_power_levels = 1;
     while ( current_index_power_levels <= powerLevelsNumber)
-        [analyzed,processedStruct,~] = analyzeFile('basicTest',1 ...
+        [analyzed,processedStruct,~] = analyzeFile('filesStruct',SignalObject ...
         ,'JND_Include_Legend',7 ...
         ,'Normalize_Sigma_Type_Signal', 1 ...
         ,'Normalize_Sigma_Type', 1 ...
         ,'JND_Delta_Alpha_Time_Factor', 0.2 ...
+        ,'Decouple_Filter',10 ...
         ,'OHC_Vector', OHC_Vector ...
         ,'IHC_Vector', IHC_Vector ...
         ,'Noises_per_run',1 ...
         ,'Calculate_JND',1 ...
         ,'Filter_Mode', 2 ...
         ,'Aihc', Aihc ...
-        ,'testedFrequencies', AudioFreq ...
         ,'testedPowerLevels', testedPowerLevels(current_index_power_levels:(current_index_power_levels+powerLevelsPerRun-1)) ... % this ensures no normalization on power of input file
         ,'JND_Noise_Source', JND_Noise_Source ...
         ,'NoiseObject',NoiseObject ...
@@ -95,13 +91,14 @@ function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En,
         ,'AC_Filter_Vector', AC_Filter_Vector ...
         ,'JND_Interval_Tail',0.000 ...
         ,'JND_Interval_Head',0.012 ...
-        ,'Allowed_Outputs',0 ...
+        ,'Allowed_Outputs',Allowed_Outputs ...
         ,'testedNoises',testedNoises);
         resultStruct = struct();
         resultStruct.analyzeInputStruct = processedStruct;
         resultStruct.analyzeResult = analyzed;
+        %dispFinalJND( resultStruct );
         jnd_final = analyzed.jnd_final;
-        jnd_rms(:,current_index_power_levels:(current_index_power_levels+powerLevelsPerRun-1)) = analyzed.jnd_rms';
+        jnd_rms(:,current_index_power_levels:(current_index_power_levels+powerLevelsPerRun-1)) = analyzed.jnd_rms;
         current_index_power_levels=current_index_power_levels+powerLevelsPerRun;
         powerLevelsPerRun = min(powerLevelsPerRun,powerLevelsNumber-current_index_power_levels+1);
     end

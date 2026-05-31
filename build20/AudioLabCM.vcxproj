@@ -107,17 +107,17 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Debug";AudioLabCM_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Debug";AudioLabCM_EXPORTS</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX=\"d\";_AFXDLL;CUDA_MEX_PROJECT=\"1\";MATLAB_MEX_FILE=\"1\";CMAKE_INTDIR=\"Debug\";AudioLabCM_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX=\"d\";_AFXDLL;CUDA_MEX_PROJECT=\"1\";MATLAB_MEX_FILE=\"1\";CMAKE_INTDIR=\"Debug\";AudioLabCM_EXPORTS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\CS_Ariel_Project\build20\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.0\common\inc;D:\vcpkg\buildtrees\eigen3\src\5.0.1-d487a628b0.clean;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <CudaCompile>
       <Include>D:\CS_Ariel_Project\build20\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.0\common\inc;D:\vcpkg\buildtrees\eigen3\src\5.0.1-d487a628b0.clean;%(Include)</Include>
-      <Defines>%(Defines);_WINDOWS;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Debug";AudioLabCM_EXPORTS</Defines>
+      <Defines>%(Defines);_WINDOWS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Debug";AudioLabCM_EXPORTS</Defines>
       <AdditionalOptions>%(AdditionalOptions) --generate-code=arch=compute_61,code=[compute_61,sm_61] -Xcompiler="/EHsc -Zi -Ob0"</AdditionalOptions>
       <CodeGeneration></CodeGeneration>
       <CompileOut>$(IntDir)%(Filename).obj</CompileOut>
@@ -172,19 +172,19 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Release";AudioLabCM_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Release";AudioLabCM_EXPORTS</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX=\"d\";_AFXDLL;CUDA_MEX_PROJECT=\"1\";MATLAB_MEX_FILE=\"1\";CMAKE_INTDIR=\"Release\";AudioLabCM_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX=\"d\";_AFXDLL;CUDA_MEX_PROJECT=\"1\";MATLAB_MEX_FILE=\"1\";CMAKE_INTDIR=\"Release\";AudioLabCM_EXPORTS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\CS_Ariel_Project\build20\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.0\common\inc;D:\vcpkg\buildtrees\eigen3\src\5.0.1-d487a628b0.clean;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <CudaCompile>
       <Include>D:\CS_Ariel_Project\build20\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.0\common\inc;D:\vcpkg\buildtrees\eigen3\src\5.0.1-d487a628b0.clean;%(Include)</Include>
-      <Defines>%(Defines);_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Release";AudioLabCM_EXPORTS</Defines>
+      <Defines>%(Defines);_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Release";AudioLabCM_EXPORTS</Defines>
       <AdditionalOptions>%(AdditionalOptions) --generate-code=arch=compute_61,code=[compute_61,sm_61] -Xcompiler="/EHsc -Ob2"</AdditionalOptions>
       <CodeGeneration></CodeGeneration>
       <CompileOut>$(IntDir)%(Filename).obj</CompileOut>
@@ -238,19 +238,19 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="MinSizeRel";AudioLabCM_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="MinSizeRel";AudioLabCM_EXPORTS</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX=\"d\";_AFXDLL;CUDA_MEX_PROJECT=\"1\";MATLAB_MEX_FILE=\"1\";CMAKE_INTDIR=\"MinSizeRel\";AudioLabCM_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX=\"d\";_AFXDLL;CUDA_MEX_PROJECT=\"1\";MATLAB_MEX_FILE=\"1\";CMAKE_INTDIR=\"MinSizeRel\";AudioLabCM_EXPORTS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\CS_Ariel_Project\build20\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.0\common\inc;D:\vcpkg\buildtrees\eigen3\src\5.0.1-d487a628b0.clean;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <CudaCompile>
       <Include>D:\CS_Ariel_Project\build20\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.0\common\inc;D:\vcpkg\buildtrees\eigen3\src\5.0.1-d487a628b0.clean;%(Include)</Include>
-      <Defines>%(Defines);_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="MinSizeRel";AudioLabCM_EXPORTS</Defines>
+      <Defines>%(Defines);_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="MinSizeRel";AudioLabCM_EXPORTS</Defines>
       <AdditionalOptions>%(AdditionalOptions) --generate-code=arch=compute_61,code=[compute_61,sm_61] -Xcompiler="/EHsc -Ob1"</AdditionalOptions>
       <CodeGeneration></CodeGeneration>
       <CompileOut>$(IntDir)%(Filename).obj</CompileOut>
@@ -305,17 +305,17 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="RelWithDebInfo";AudioLabCM_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="RelWithDebInfo";AudioLabCM_EXPORTS</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX=\"d\";_AFXDLL;CUDA_MEX_PROJECT=\"1\";MATLAB_MEX_FILE=\"1\";CMAKE_INTDIR=\"RelWithDebInfo\";AudioLabCM_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX=\"d\";_AFXDLL;CUDA_MEX_PROJECT=\"1\";MATLAB_MEX_FILE=\"1\";CMAKE_INTDIR=\"RelWithDebInfo\";AudioLabCM_EXPORTS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\CS_Ariel_Project\build20\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.0\common\inc;D:\vcpkg\buildtrees\eigen3\src\5.0.1-d487a628b0.clean;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <CudaCompile>
       <Include>D:\CS_Ariel_Project\build20\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.0\common\inc;D:\vcpkg\buildtrees\eigen3\src\5.0.1-d487a628b0.clean;%(Include)</Include>
-      <Defines>%(Defines);_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="RelWithDebInfo";AudioLabCM_EXPORTS</Defines>
+      <Defines>%(Defines);_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="RelWithDebInfo";AudioLabCM_EXPORTS</Defines>
       <AdditionalOptions>%(AdditionalOptions) --generate-code=arch=compute_61,code=[compute_61,sm_61] -Xcompiler="/EHsc -Zi -Ob1"</AdditionalOptions>
       <CodeGeneration></CodeGeneration>
       <CompileOut>$(IntDir)%(Filename).obj</CompileOut>
