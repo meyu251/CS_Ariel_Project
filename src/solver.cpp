@@ -76,8 +76,8 @@ mapper<std::string, double> CSolver::compressDeviceData() {
 	device_data.add("maxThreadsPerMultiProcessor", static_cast<double>(deviceProp.maxThreadsPerMultiProcessor));
 	device_data.add("regsPerMultiprocessor", static_cast<double>(deviceProp.regsPerMultiprocessor));
 	device_data.add("multiProcessorCount", static_cast<double>(deviceProp.multiProcessorCount));
-	device_data.add("clockRateMHZ", static_cast<double>(deviceProp.clockRate / 1024));
-	device_data.add("memoryRateMBitsps", static_cast<double>(deviceProp.memoryBusWidth*deviceProp.memoryClockRate / 1024));
+	device_data.add("clockRateMHZ", 0.0);
+	device_data.add("memoryRateMBitsps", 0.0);
 	return device_data;
 }
 std::string CSolver::showDeviceData() {
@@ -85,16 +85,16 @@ std::string CSolver::showDeviceData() {
 	oss.setf(oss.boolalpha);
 	oss << "Device " << _device_id << ": " << deviceProp.name << endl;
 	oss << "Architecture Version: " << deviceProp.major<<"."<<deviceProp.minor << endl;
-	oss << "Clock frequency: " << (deviceProp.clockRate / 1024) << " MHz"<<endl;
+	oss << "Clock frequency: N/A" << endl;
 	oss << "warp size: " << deviceProp.warpSize << endl;
 	oss << "global memory available: " << (deviceProp.totalGlobalMem / 1048576) << " MBytes" << endl;
 	oss << "constant memory available: " << (deviceProp.totalConstMem / 1024) << " KBytes" << endl;
 	oss << "shared memory per block available: " << (deviceProp.sharedMemPerBlock / 1024) << " KBytes" << endl;
 	oss << "shared memory per multiprocessor available: " << (deviceProp.sharedMemPerMultiprocessor / 1024) << " KBytes" << endl;
 	oss << "L2 Cahce size: " << (deviceProp.l2CacheSize / 1024) << " KBytes" << endl;
-	oss << "Memory bus clock: " << (deviceProp.memoryClockRate / 1024 ) << " MHz" << endl;
+	oss << "Memory bus clock: N/A" << endl;
 	oss << "Memory bus width: " << (deviceProp.memoryBusWidth) << " Bits" << endl;
-	oss << "Memory bus rate: " << (deviceProp.memoryBusWidth*deviceProp.memoryClockRate / 1024) << " MBits/s" << endl;
+	oss << "Memory bus rate: N/A" << endl;
 	oss << "Number of multiprocessors: " << deviceProp.multiProcessorCount  << endl;
 	oss << "Max threads per block: " << deviceProp.maxThreadsPerBlock << endl;
 	oss << "Max threads dimension: " << deviceProp.maxThreadsDim << endl;
@@ -1072,7 +1072,10 @@ size_t CSolver::longestTimeBlock() {
 }
 // length of input buffer to allocate
 size_t CSolver::inputBufferTimeNodes() {
-	return longestTimeBlock()*(maxTimeBlocks() + 1) + 2 * bufferOverlapNodes();
+	size_t ltb = longestTimeBlock();
+	size_t mtb = maxTimeBlocks();
+	size_t bon = bufferOverlapNodes();
+	return ltb * (mtb + 1) + 2 * bon;
 }
 
 // length of output buffer to allocate

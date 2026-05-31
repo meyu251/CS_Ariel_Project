@@ -145,7 +145,7 @@ auto* vh = mex_handler->params ? mex_handler->params->vhout : nullptr;
 mex_handler->mainlog.markTime(6);
 
 		// assert device synchronized
-		gpuAssert(cudaThreadSynchronize());
+		gpuAssert(cudaDeviceSynchronize());
 		mex_handler->mainlog.markTime(7);
 		
 		mex_handler->mainlog.markTime(8);

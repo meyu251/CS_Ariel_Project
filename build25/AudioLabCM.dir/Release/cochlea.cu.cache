@@ -1,0 +1,61 @@
+Identity=..\src\cochlea.cu
+AdditionalCompilerOptions=
+AdditionalCompilerOptions=
+AdditionalDependencies=
+AdditionalDeps=
+AdditionalLibraryDirectories=
+AdditionalOptions= --generate-code=arch=compute_120,code=[compute_120,sm_120] -Xcompiler="/EHsc -Ob2"
+AdditionalOptions= --generate-code=arch=compute_120,code=[compute_120,sm_120] -Xcompiler="/EHsc -Ob2"
+CodeGeneration=
+CodeGeneration=
+CompileOut=AudioLabCM.dir\Release\cochlea.obj
+CudaRuntime=Static
+CudaToolkitCustomDir=
+<<<<<<< HEAD:build20/AudioLabCM.dir/Release/cochlea.cu.cache
+Defines=;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Release";AudioLabCM_EXPORTS;_WINDLL;_MBCS;_AFXDLL;;WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Release";AudioLabCM_EXPORTS
+=======
+DebugInformationFormat=None
+DebugInformationFormat=None
+Defines=;_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Release";AudioLabCM_EXPORTS;_WINDLL;_MBCS;_AFXDLL;;WIN32;_WINDOWS;NDEBUG;MX_TARGET_API_VER=0x700;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG_POSTFIX="d";_AFXDLL;CUDA_MEX_PROJECT="1";MATLAB_MEX_FILE="1";CMAKE_INTDIR="Release";AudioLabCM_EXPORTS
+>>>>>>> 69f76668299b221a08669566c68ab9d9d5de1ed8:build25/AudioLabCM.dir/Release/cochlea.cu.cache
+Emulation=false
+EnableVirtualArchInFatbin=true
+ExtensibleWholeProgramCompilation=false
+FastCompile=Off
+FastMath=false
+GenerateLineInfo=false
+GenerateRelocatableDeviceCode=true
+GPUDebugInfo=false
+GPUDebugInfo=false
+HostDebugInfo=false
+Include=D:\CS_Ariel_Project\build25\include;C:\Program Files\MATLAB\R2025b\extern\include;D:\CS_Ariel_Project\include;D:\CS_Ariel_Project\include\IowaHillsFilters;D:\CS_Ariel_Project\include\firpm;D:\CS_Ariel_Project\include\mexplus;\common\inc;C:\vcpkg\installed\x64-windows\include\eigen3
+Inputs=
+InterleaveSourceInPTX=false
+Keep=false
+KeepDir=AudioLabCM\x64\Release
+LinkOut=
+MaxRegCount=0
+NvccCompilation=compile
+NvccPath=
+Optimization=O2
+Optimization=O2
+PerformDeviceLink=
+PerformDeviceLinkTimeOptimization=
+PtxAsOptionV=false
+RequiredIncludes=
+Runtime=MD
+Runtime=MD
+RuntimeChecks=Default
+RuntimeChecks=Default
+SplitCompile=Default
+SplitCompileCustomThreads=
+TargetMachinePlatform=64
+TargetMachinePlatform=64
+TypeInfo=true
+TypeInfo=true
+UseHostDefines=true
+UseHostInclude=false
+UseHostLibraryDependencies=
+UseHostLibraryDirectories=
+Warning=W3
+Warning=W3
