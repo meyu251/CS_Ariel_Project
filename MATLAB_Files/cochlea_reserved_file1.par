@@ -1,7 +1,7 @@
 Fs = 20000
 Show_Transient = 1
 Scale_BM_Velocity_For_Lambda_Calculation = 0.010000
-Processed_Interval = 5.600000000000001
+Processed_Interval = 11
 Time_Block_Length = 0.020000
 Overlap_Time = 0.005000
 Load_Previous_File = "D:\CS_Ariel_Project\MATLAB_Files\Data\backup_few_ms1.bin"
@@ -23,4 +23,4 @@ Lambda_Low = "D:\CS_Ariel_Project\MATLAB_Files\Data\lambda_low_test10.bin"
 Continues = 1
 Input_File = "D:\CS_Ariel_Project\MATLAB_Files\test1.bin"
 Offset = 0
-Duration = 5.600000000000001
+Duration = 11

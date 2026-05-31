@@ -17,21 +17,8 @@ s = sin(2*pi*1000*t);
 audiowrite('TestFreq.wav',s,Fs);
 signal2 = 'TestFreq.wav';
 
-SetCochlearParametersOld
-
-
-delete('AudioLabCM.mexw64')
-copyfile('OldAudioLabCM.mexw64', 'AudioLabCM.mexw64')
-
-JND1000Old1= CalculateJNDfiles2(1000,noise1,run_time,En1,testedPowerLevels,OHC_Vector, IHC_Vector);
-JND1000Old2 = CalculateJNDfiles(signal2, noise1,run_time,En1,testedPowerLevels,OHC_Vector, IHC_Vector);
-JNDSignalOld = CalculateJNDfiles( signal1,noise1,0.2,En1,testedPowerLevels)
-
-delete('AudioLabCM.mexw64')
-copyfile('NewAudioLabCM.mexw64', 'AudioLabCM.mexw64')
-
 JND1000New1= CalculateJNDfiles2(1000,noise1,run_time,En1,testedPowerLevels,OHC_Vector, IHC_Vector);
 JND1000New2 = CalculateJNDfiles(signal2, noise1,run_time,En1,testedPowerLevels,OHC_Vector, IHC_Vector);
 JNDSignalNew = CalculateJNDfiles( signal1,noise1,0.2,En1,testedPowerLevels)
 
-disp([JND1000Old1,JND1000Old2,JNDSignalOld;JND1000New1,JND1000New2,JNDSignalNew]) 
+disp([JND1000New1,JND1000New2,JNDSignalNew]) 

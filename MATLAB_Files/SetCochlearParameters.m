@@ -55,7 +55,7 @@ M=120*ones(1,Nsec); %number of auditory fibers
 
 Scale_BM_Velocity_For_Lambda_Calculation=1;
 
-SPLref=5.0000e-08; 
+SPLref=4.0000e-08; 
 
 w=[0.61;0.23;0.16]; 
 
