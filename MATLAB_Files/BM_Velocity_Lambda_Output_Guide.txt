@@ -1,0 +1,190 @@
+================================================================
+  AudioLabCM - מדריך שמירת פלטים: BM_Velocity ו-Lambda
+  תאריך עדכון: יוני 2026
+================================================================
+
+מבנה כללי
+----------
+ברירות המחדל בקובץ preAnalyzeFile.m מבטלות את שני הפלטים:
+
+    inputStruct.Discard_BM_Velocity_Output = 1;   % לא לשמור BM velocity
+    inputStruct.Discard_Lambdas_Output     = 1;   % לא לשמור Lambda
+    inputStruct.Allowed_Outputs            = 0;   % אפס = שום פלט
+
+כדי לאפשר פלט - מעבירים פרמטרים לתוך הקריאה ל-analyzeFile (או דרך
+CalculateJNDfiles2) שמדרסים את ברירות המחדל האלה.
+
+הנתונים מוחזרים מה-MEX בתוך:
+    analyzed.output_results     (וקטור float)
+
+
+================================================================
+  חלק א: פלט BM_Velocity (מהירות קרום הבסיס)
+================================================================
+
+מה זה?
+-------
+BM_Velocity הוא מהירות התנודה של קרום הבסיס לאורך 256 חתכים מרחביים
+לכל דגימת זמן. מחושב ב-CUDA (cochlea.cuh) באמצעות אינטגרציה טרפזואידית:
+    new_speed = prev_speed + 0.5 * dt * (prev_accel + new_accel)
+
+גודל הפלט:
+    וקטור עם (מספר_דגימות_זמן × 256) ערכים.
+    לדוגמה: run_time=0.2s, Fs=20000 → 4000 דגימות × 256 = 1,024,000 ערכים.
+
+מה לשנות ב-CalculateJNDfiles2.m?
+----------------------------------
+1. בחתימת הפונקציה - להוסיף ערך חזרה שלישי:
+       function [jnd_final, jnd_rms, bm_velocity] = calculateJNDfiles2(...)
+
+2. לאתחל לפני הלולאה:
+       bm_velocity = [];
+
+3. בקריאה ל-analyzeFile - להוסיף שני פרמטרים:
+       ,'Allowed_Outputs', 1              % ביט 0 = BM_Velocity
+       ,'Discard_BM_Velocity_Output', 0   % ביטול ה-discard
+
+   ** אפשרות שקולה: לכתוב רק את Discard_BM_Velocity_Output=0
+      כי הוא מגדיר Allowed_Outputs |= 1 אוטומטית (ראה params.cpp שורה 855).
+      אבל אם כותבים גם Allowed_Outputs וגם Discard_BM_Velocity_Output,
+      העדיפות היא ל-Allowed_Outputs (הוא נקרא אחרון ב-params.cpp שורה 864).
+
+4. בתוך הלולאה, אחרי הקריאה ל-analyzeFile - ללכוד את הנתונים:
+       if isempty(bm_velocity) && isfield(analyzed, 'output_results')
+           bm_velocity = analyzed.output_results;
+       end
+   (לוקח מהאיטרציה הראשונה; ניתן לשנות לאיטרציה ספציפית לפי הצורך)
+
+מה לשנות חזרה (כיבוי BM_Velocity)?
+--------------------------------------
+    - להסיר את שני השורות: Allowed_Outputs=1 ו-Discard_BM_Velocity_Output=0
+    - (ברירת המחדל בpreAnalyzeFile.m תבטל אוטומטית)
+
+
+================================================================
+  חלק ב: פלט Lambda (קצב ירי עצבי / IHC)
+================================================================
+
+מה זה?
+-------
+Lambda הוא קצב ירי עצב השמיעה - הפלט של תא השיער הפנימי (IHC).
+שולט עליו ביטים 1+2+3 ב-Allowed_Outputs (ערך דצימלי 14 = 0b00001110).
+
+מה לשנות ב-CalculateJNDfiles2.m?
+----------------------------------
+1. להסיר (או לא להוסיף) את: Allowed_Outputs=1, Discard_BM_Velocity_Output=0
+
+2. להוסיף במקום (חובה להוסיף את שניהם!):
+       ,'Allowed_Outputs', 14
+       ,'Discard_Lambdas_Output', 0
+
+   ** חשוב: חייבים לכתוב Allowed_Outputs=14 במפורש! **
+   הסיבה: params.cpp קורא Discard_Lambdas_Output ומגדיר Allowed_Outputs |= 14,
+   אבל אז קורא Allowed_Outputs שוב ומדרס אותו.
+   preAnalyzeFile.m תמיד מוסיף Allowed_Outputs=0 כברירת מחדל,
+   ולכן בלי הציון המפורש — Lambda לא ישמר.
+   (ראה params.cpp שורות 858-865)
+
+3. הנתונים יופיעו ב: analyzed.output_results
+
+כיבוי Lambda:
+    - להסיר את שורת Discard_Lambdas_Output=0
+
+** חשוב: מעבר מ-BM_Velocity ל-Lambda דורש שינוי בכל המקומות האלה **
+(BM_Velocity ו-Lambda לא יכולים לרוץ יחד באותה קריאה - צריך לבחור אחד)
+
+    CalculateJNDfiles2.m:
+        1. חתימה:    bm_velocity   →   lambda_output
+        2. אתחול:    bm_velocity = [];   →   lambda_output = [];
+        3. פרמטרים:  הסר Allowed_Outputs=1, Discard_BM_Velocity_Output=0
+                     הוסף Allowed_Outputs=14, Discard_Lambdas_Output=0
+        4. לכידה:    bm_velocity = analyzed.output_results;
+                     →   lambda_output = analyzed.output_results;
+
+    TestRms.m (או כל סקריפט קורא):
+        1. קריאה:   [JNDrefNew, JNDRms, bm_vel]     = CalculateJNDfiles2(...)
+                    → [JNDrefNew, JNDRms, lambda_val] = CalculateJNDfiles2(...)
+        2. שמירה:   save('bm_velocity_result.mat', 'bm_vel')
+                    → save('lambda_result.mat', 'lambda_val')
+
+
+================================================================
+  חלק ג: קוד שנוסף לסשן זה - השוואה בין שני מחשבים
+================================================================
+
+--- CalculateJNDfiles2.m ---
+
+שינוי 1: חתימת הפונקציה (שורה 1)
+    לפני:   function [jnd_final, jnd_rms] = calculateJNDfiles2(...)
+    אחרי:   function [jnd_final, jnd_rms, bm_velocity] = calculateJNDfiles2(...)
+
+שינוי 2: אתחול (לפני הלולאה)
+    נוסף:   bm_velocity = [];
+
+שינוי 3: פרמטרים בקריאה ל-analyzeFile (שמאפשרים BM_Velocity)
+    שונה:   'Allowed_Outputs', 0  →  'Allowed_Outputs', 1
+    נוסף:   'Discard_BM_Velocity_Output', 0
+
+שינוי 4: לכידת הנתונים בתוך הלולאה (אחרי analyzeFile)
+    נוסף:
+        if isempty(bm_velocity) && isfield(analyzed, 'output_results')
+            bm_velocity = analyzed.output_results;
+        end
+
+--- TestRms.m ---
+
+שינוי 1: קריאה לפונקציה עם ערך חזרה שלישי
+    שונה:   [JNDrefNew, JNDRms] = CalculateJNDfiles2(...)
+    אחרי:   [JNDrefNew, JNDRms, bm_vel] = CalculateJNDfiles2(...)
+
+שינוי 2: שמירה לקובץ
+    נוסף:   save('bm_velocity_result.mat', 'bm_vel');
+
+שינוי 3: קוד השוואה בין שני מחשבים (בסוף הקובץ)
+    - טוען קובץ bm_velocity_reference.mat (מהמחשב השני)
+    - מחשב max abs diff ו-relative error
+    - מציג imagesc של ההפרש המוחלט
+
+
+================================================================
+  חלק ד: הוראות השוואה בין שני מחשבים
+================================================================
+
+צעד 1 - מחשב א:
+    הרץ TestRms.m → ייווצר בm_velocity_result.mat
+
+צעד 2:
+    העתק את bm_velocity_result.mat למחשב ב
+    שנה שם ל: bm_velocity_reference.mat
+    שים אותו בתיקיית MATLAB_Files
+
+צעד 3 - מחשב ב:
+    הרץ TestRms.m → יוצג בקונסול:
+        Exact match    : true/false
+        Max abs diff   : X.XXXXXe-XX
+        Relative error : X.XXXXXe-XX
+    ויוצג גרף imagesc של ההפרש
+
+
+================================================================
+  חלק ה: בעיית תאימות GPU (חשוב!)
+================================================================
+
+הבעיה המרכזית להבדלי תוצאות בין מחשבים:
+
+    קובץ AudioLabCM.mexw64 מקומפל ל: sm_120 (RTX 50xx / Blackwell)
+    GTX 1080 Ti הוא:                sm_61  (Pascal)
+
+    כאשר MEX מקומפל ל-sm_120 רץ על sm_61, CUDA מנסה JIT compilation
+    דרך PTX - זה עלול לתת תוצאות שגויות או כישלון שקט.
+
+פתרון - לשנות ב-CMakeLists.txt שורה 18:
+    לפני:   set(CMAKE_CUDA_ARCHITECTURES 120)
+    אחרי:   set(CMAKE_CUDA_ARCHITECTURES 61 120)
+
+ואז לבנות מחדש:
+    cd build20
+    cmake .. -G "Visual Studio 17 2022"
+    cmake --build . --config Release
+
+================================================================
