@@ -4,7 +4,7 @@ ISO226_2003 %Conversion GSI HL to SPL
 Fs=20000;
 run_time=0.2;
 En=1111;
-testedPowerLevels = -10:5:120;
+%testedPowerLevels = -10:5:120;
 x=0:3.5/256:3.5-3.5/256;
 
 %JNDref=[17.6941   13.4530   10.3338    2.4528    2.2692   27.5879]';
@@ -23,3 +23,4 @@ xm0=(2.5:5:100)*3.5/100; %location in percentage
 load Parabolicfit
 [Egt, at bt, ct]=fitParabola(IH,mIH,mGa); 
 
+save Final_Parameters "-append"
