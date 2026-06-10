@@ -1,4 +1,4 @@
-function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En, testedPowerLevels, OHC_Vector, IHC_Vector, PrescriptionName )
+function [jnd_final, jnd_rms, bm_velocity] = calculateJNDfiles2( AudioFreq,noise,run_time,En, testedPowerLevels, OHC_Vector, IHC_Vector, PrescriptionName )
 %CALCULATEGENERALJND calculates JND for any signal and noise
 %   signal should be wav file name (relative path to current folder
 %   suffice)
@@ -76,6 +76,7 @@ function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En,
     AC_Filter_Vector = getTimeSynapsesIIR( 20000,300,1800,3,30);
 
     jnd_rms = zeros(length(testedNoises)*length(AudioFreq),powerLevelsNumber);
+    bm_velocity = [];
     current_index_power_levels = 1;
     while ( current_index_power_levels <= powerLevelsNumber)
         [analyzed,processedStruct,~] = analyzeFile('basicTest',1 ...
@@ -98,11 +99,15 @@ function [jnd_final, jnd_rms] = calculateJNDfiles2( AudioFreq,noise,run_time,En,
         ,'AC_Filter_Vector', AC_Filter_Vector ...
         ,'JND_Interval_Tail',0.000 ...
         ,'JND_Interval_Head',0.012 ...
-        ,'Allowed_Outputs',0 ...
+        ,'Allowed_Outputs',1 ...
+        ,'Discard_BM_Velocity_Output', 0 ...
         ,'testedNoises',testedNoises);
         resultStruct = struct();
         resultStruct.analyzeInputStruct = processedStruct;
         resultStruct.analyzeResult = analyzed;
+        if isempty(bm_velocity) && isfield(analyzed, 'output_results')
+            bm_velocity = analyzed.output_results;
+        end
         jnd_final = analyzed.jnd_final;
         jnd_rms(:,current_index_power_levels:(current_index_power_levels+powerLevelsPerRun-1)) = analyzed.jnd_rms';
         current_index_power_levels=current_index_power_levels+powerLevelsPerRun;

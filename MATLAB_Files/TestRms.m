@@ -13,12 +13,20 @@ En = 1111;
 
 Fs=20000;
 run_time=0.2;
-testedPowerLevels = -10:1:120;
+testedPowerLevels = 10:5:100;
 %f=[100, 250,500,1000,2000,3000,3500,4000,8000];
-f=[500, 8000];
+f=[6000];
 OHC_Vector=0.5; IHC_Vector=8;
-[JNDrefNew, JNDRms] = CalculateJNDfiles2( f,noise,run_time,En,testedPowerLevels,OHC_Vector, IHC_Vector);
+[JNDrefNew, JNDRms, bm_vel] = CalculateJNDfiles2( f,noise,run_time,En,testedPowerLevels,OHC_Vector, IHC_Vector);
 
 JNDrefNew
-JNDRms
+
+save('bm_velocity_result.mat', 'bm_vel');
+
+bm_matrix = reshape(bm_vel, 256, [])';
+figure;
+imagesc(bm_matrix');
+colorbar;
+title('BM Velocity');
+xlabel('Time sample'); ylabel('Section');
 
