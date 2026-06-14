@@ -105,8 +105,10 @@ function [jnd_final, jnd_rms, lambda_output] = calculateJNDfiles2( AudioFreq,noi
         resultStruct = struct();
         resultStruct.analyzeInputStruct = processedStruct;
         resultStruct.analyzeResult = analyzed;
-        if isempty(lambda_output) && isfield(analyzed, 'output_results')
-            lambda_output = analyzed.output_results;
+        if isempty(lambda_output) && isfield(analyzed, 'lambda_high')
+            lambda_output.lambda_high   = analyzed.lambda_high;
+            lambda_output.lambda_medium = analyzed.lambda_medium;
+            lambda_output.lambda_low    = analyzed.lambda_low;
         end
         jnd_final = analyzed.jnd_final;
         jnd_rms(:,current_index_power_levels:(current_index_power_levels+powerLevelsPerRun-1)) = analyzed.jnd_rms';

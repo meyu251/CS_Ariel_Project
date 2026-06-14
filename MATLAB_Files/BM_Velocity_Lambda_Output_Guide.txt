@@ -85,7 +85,11 @@ Lambda הוא קצב ירי עצב השמיעה - הפלט של תא השיער 
    ולכן בלי הציון המפורש — Lambda לא ישמר.
    (ראה params.cpp שורות 858-865)
 
-3. הנתונים יופיעו ב: analyzed.output_results
+3. הנתונים יופיעו ב: analyzed.lambda_high, analyzed.lambda_medium, analyzed.lambda_low
+   (לא ב-analyzed.output_results כמו BM_Velocity — Lambda נכתב לשדות נפרדים!)
+   ראה AudioGramCreator.cpp שורה 208:
+       lambdas_names = {"lambda_high", "lambda_medium", "lambda_low"}
+       Allowed_Output_Flags(1),(2),(3) שולטים על כל אחד
 
 כיבוי Lambda:
     - להסיר את שורת Discard_Lambdas_Output=0
@@ -99,7 +103,11 @@ Lambda הוא קצב ירי עצב השמיעה - הפלט של תא השיער 
         3. פרמטרים:  הסר Allowed_Outputs=1, Discard_BM_Velocity_Output=0
                      הוסף Allowed_Outputs=14, Discard_Lambdas_Output=0
         4. לכידה:    bm_velocity = analyzed.output_results;
-                     →   lambda_output = analyzed.output_results;
+                     →   if isfield(analyzed, 'lambda_high')
+                             lambda_output.lambda_high   = analyzed.lambda_high;
+                             lambda_output.lambda_medium = analyzed.lambda_medium;
+                             lambda_output.lambda_low    = analyzed.lambda_low;
+                         end
 
     TestRms.m (או כל סקריפט קורא):
         1. קריאה:   [JNDrefNew, JNDRms, bm_vel]     = CalculateJNDfiles2(...)
