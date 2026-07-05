@@ -498,9 +498,17 @@ void AudioGramCreator::calcJNDFinal() {
 			}
 			if (calculate_rms) {
 				double sfisherRateReg = 1.0/sqrt(fisherRateReg);
-				
+				double rateJNDdB = params[params_set_counter].PA2SPLForFinalJNDBounded(sfisherRateReg);
+				PrintFormat("JND[%d] F_RA=[%.6e, %.6e, %.6e] sum=%.6e  JND_RA=%.6e  dB=%.4f\n",
+					globaldAIndex,
+					(double)F_RA[0 * JNDAllIntervals + globaldAIndex],
+					(double)F_RA[1 * JNDAllIntervals + globaldAIndex],
+					(double)F_RA[2 * JNDAllIntervals + globaldAIndex],
+					fisherRateReg,
+					sfisherRateReg,
+					rateJNDdB);
 				JND_RA[result_interval_index] = static_cast<JNDFloat>(sfisherRateReg);
-				RateJNDall[result_interval_index] = params[params_set_counter].PA2SPLForFinalJNDBounded(sfisherRateReg);
+				RateJNDall[result_interval_index] = static_cast<JNDFloat>(rateJNDdB);
 			}
 			
 		}
