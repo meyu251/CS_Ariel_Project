@@ -42,17 +42,19 @@ float ComplexJNDProfile::calculateMinValue(const vector<double>& rawJNDValues, c
 		}
 		if (captured == 0) {
 			calculateMinValueWarning = 1;
-			if (relevant_values[0] < relevant_values[1]) { 
-				_minValueFound = static_cast<float>(relevant_values[0]); 
-				Failed_Convergence_Warning = static_cast<int>(failed_convergence_found[0]);
+			if (relevant_values[0] < relevant_values[1]) {
+				_minValueFound = static_cast<float>(relevant_values[0]);
+				Failed_Convergence_Warning = static_cast<int>(failed_convergence[0]);
 			}
-			else if (relevant_values[relevant_values.size() - 1] < relevant_values[relevant_values.size() - 2]) { 
+			else if (relevant_values[relevant_values.size() - 1] < relevant_values[relevant_values.size() - 2]) {
 				_minValueFound = static_cast<float>(relevant_values[relevant_values.size() - 1]);
-				Failed_Convergence_Warning = static_cast<int>(failed_convergence_found[relevant_values.size() - 1]);
+				Failed_Convergence_Warning = static_cast<int>(failed_convergence[relevant_values.size() - 1]);
 			}
 		} else {
-			_minValueFound = static_cast<float>(minimums_captured[captured - 1]);
-			Failed_Convergence_Warning = static_cast<int>(failed_convergence_found[captured - 1]);
+			auto min_it = std::min_element(minimums_captured.begin(), minimums_captured.end());
+			int min_idx = static_cast<int>(std::distance(minimums_captured.begin(), min_it));
+			_minValueFound = static_cast<float>(*min_it);
+			Failed_Convergence_Warning = static_cast<int>(failed_convergence_found[min_idx]);
 		}
 	}
 	if (view_parts) {
